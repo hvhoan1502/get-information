@@ -3,7 +3,7 @@ const request = require('request');
 
 function getAll() {
     return new Promise((resolve, reject) => {
-        request('http://www.thongtincongty.com/thanh-pho-ho-chi-minh/quan-binh-thanh/?page=1', (err, rq, body) => {
+        request('http://www.thongtincongty.com/thanh-pho-ho-chi-minh/quan-2/?page=2', (err, rq, body) => {
             if (err) return reject(err);
             resolve(body);
         });
@@ -34,7 +34,7 @@ class API {
         try {
             const body = await getAll();
             const st1 = body.indexOf('<div class="search-results">');
-            const st2 = body.indexOf('<ul class="pagination"> <li class="active">');
+            const st2 = body.indexOf('<ul class="pagination"> <li');
             let newBody = body.substring(st1 + 28, st2 - 50);
             newBody = newBody.trim();
             const infoArray = newBody.split('<div class="search-results">')
