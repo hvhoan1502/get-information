@@ -1,20 +1,18 @@
 // const request = require('request'); 
 var request = require('request-promise');
 
-async function getAllData() {
+function getAllData() {
     let allResults = [];
-    await request('http://www.thongtincongty.com/thanh-pho-ho-chi-minh/quan-1/')
-    .then(body => {
+    request('http://www.thongtincongty.com/thanh-pho-ho-chi-minh/quan-1/', (error, response, body) => {
         const st1 = body.indexOf('<div class="search-results">')
         const st2 = body.indexOf('<ul class="pagination"> <li class="active">');
         let newBody = body.substring(st1 + 28, st2 - 50);
         newBody = newBody.trim();
         const infoArray = newBody.split('<div class="search-results">')
-        await infoArray.forEach(item => {
+        infoArray.forEach(item => {
             const getElement = info(item);
             if(getElement) {
-                request(getElement)
-                .then(bodyDetail => {
+                request(getElement, (err , rq, bodyDetail) => {
                     const firstIndex = bodyDetail.indexOf('jumbotron');
                     const lastIndex = bodyDetail.indexOf('div align="center"><script async src');
                     const data = bodyDetail.substring(firstIndex + 11, lastIndex);
@@ -40,7 +38,7 @@ async function getAllData() {
             }
         });
         console.log(allResults)
-    })
+    });
     return allResults;
 };
 
