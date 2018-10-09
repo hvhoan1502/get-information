@@ -50,8 +50,3 @@ function info(data) {
 
     return link;
 }
-
-
-// console.log(getAllData());
-
-// module.exports = {getAllData}

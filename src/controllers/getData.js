@@ -5,8 +5,9 @@ const getDataRouter = express.Router();
 
 
 getDataRouter.get('/', (req, res) => {
-    API.getListData().then(data => res.send(data))
-    .catch(err => res.send(err))
+    API.getDataCompany()
+    .then(result => res.send(result))
+    .catch(error => res.send(error));
 });
 
 module.exports = {getDataRouter}
