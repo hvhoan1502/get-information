@@ -20,10 +20,14 @@ function getDetailCompany(uri) {
 }
 
 async function getDataCompany() {
-    const results = [];
+    const results = [1, 2, 3, 4, 5];
+    let list = [];
     const bodyDetail = await getAll();
-    const body = await getDetailCompany('http://www.thongtincongty.com/thanh-pho-ho-chi-minh/quan-1/');
-    return body;
+    for(let i = 0; i< 5; i++) {
+        const body = await getDetailCompany('http://www.thongtincongty.com/thanh-pho-ho-chi-minh/quan-1/');
+        list.push(1);
+    }
+    return list;
 };
 
 function info(data) {

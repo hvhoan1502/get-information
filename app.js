@@ -1,6 +1,7 @@
 const express = require('express');
 
 const app = express();
+app.set('view engine', 'ejs');
 
 const { getDataRouter } = require('./src/controllers/getData')
 app.use((req, res, next) => {
