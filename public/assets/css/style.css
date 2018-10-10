@@ -1,0 +1,20 @@
+*{}
+
+#swapper {
+    margin-top: 250px
+}
+
+#main {
+    margin-top: 30px;
+}
+#main a {
+    font-style: initial;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #374f96;
+}
+.col-md-3 {
+    border: 1px solid gray;
+    text-align: center;
+    background: #e0e5de;
+}

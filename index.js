@@ -91,5 +91,21 @@ function test1() {
     });
 }
 
+
+async function getData() {
+    let result = [];
+    await request('https://avc', (err, res, body) => {
+        await request(body.link, (err1, res, body1) => {
+            body1.forEach(item => {
+                await request(item, (err, rq, bodyDetail) => {
+                    result.push(bodyDetail);
+                })
+            })
+        })
+    });
+    return result;
+}
+
+
 const PORT = process.env || 3000;
 app.listen(3000, () => console.log(`Server started on port: ${PORT}`));
