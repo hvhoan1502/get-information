@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.render('login');
 });
-
+ 
 app.post('/login', (req, res) => {
     const { email, password } =req.body;
     if(email === 'hvhoan1502@gmail.com') {
