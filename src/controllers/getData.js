@@ -1,6 +1,7 @@
 const express = require('express');
 
 const { API } = require('../helpers/sendAPI');
+const { getData } = require('../helpers/tmAPI');
 const getDataRouter = express.Router();
 
 function getCompanyWebSite(size) {
@@ -87,7 +88,7 @@ function getCompanyWebSite(size) {
 /**
  * get data company
  */
-getDataRouter.get('/:from/:to', (req, res) => {
+getDataRouter.get('/thongtincongty/:from/:to', (req, res) => {
     const { from, to } = req.params;
     const webSize = req.query.id;
     const startPages = parseInt(from);
@@ -100,6 +101,16 @@ getDataRouter.get('/:from/:to', (req, res) => {
     API.getDataCompany(district, startPages, endPages)
     .then(results => res.render('home', { results }))
     .catch(error => res.send(error));
+});
+
+getDataRouter.get('/baothuongmai/:from/:to', (req, res) => {
+    const {from, to} = req.params;
+    const startIndex = parseInt(from);
+    const endIndex = parseInt(to);
+    if(startIndex < 1 || startIndex > endIndex) {
+        res.send('Nhap sai roi kia...');
+    }
+    getData(startIndex, endIndex).then(results => res.render('baothuongmai.ejs', { results }));
 });
 
 module.exports = {getDataRouter}

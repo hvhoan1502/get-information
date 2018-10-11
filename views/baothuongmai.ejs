@@ -1,0 +1,45 @@
+<%
+    function getName(groupKey) {
+        let district;
+        switch(groupKey) {
+            case 'Quan11':
+
+                bre
+        }
+    }
+%>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    .container{
+        margin-top: 25px;
+    }
+</style>
+<body>
+
+    <div class="container">
+        <% for(let item in results) { %>
+                <h1><%= item %></h1> <br>
+                <% results[item].forEach(result => { %>
+                    <div class="row">
+                        <div>
+                            <span>Tên công ty: <%= result.name %> </span><br>
+                            <span>Địa chỉ: <%= result.address %> </span><br>
+                            <span>Số điện thoại: <%= result.phoneNumber %></span> <br>
+                            <span>Thông tin công ty: <%= result.career %></span>
+                        </div>
+                    </div>
+                    <br>
+                <% }); %>
+        <% }; %>
+    </div>
+
+</body>
+</html>
