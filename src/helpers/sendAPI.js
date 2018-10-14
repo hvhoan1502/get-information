@@ -47,7 +47,7 @@ class API {
                         const bodyDetail = await getDetailCompany(getElement);
                         const firstIndex = bodyDetail.indexOf('jumbotron');
                         const lastIndex = bodyDetail.indexOf('div align="center"><script async src');
-                        const data = bodyDetail.substring(firstIndex + 11, lastIndex);
+                        let data = bodyDetail.substring(firstIndex + 11, lastIndex);
                         // name
                         let firstIndexName = data.indexOf('>CÔNG');
                         let lastIndexName = data.indexOf('</span>');
@@ -62,6 +62,11 @@ class API {
                         const firstIndexAddress = data.indexOf('Địa chỉ');
                         const lastIndexAddress = data.indexOf('Minh<br/>');
                         const address = data.substring(firstIndexAddress, lastIndexAddress + 4);
+                        // ndd
+                        data = data.substring(lastIndexAddress + 5);
+                        const firstIndexMaster = data.indexOf('Đại diện pháp luật');
+                        const lastIndexMaster = data.indexOf('<br/> ');
+                        const master = data.substring(firstIndexMaster, lastIndexMaster);
                         //sdt link
                         const firstIndexPhone = data.indexOf('Điện thoại: <img src=');
                         const lastIndexPhone = data.indexOf('"><br/>');
@@ -74,7 +79,8 @@ class API {
                             results.push({
                                 name,
                                 address,
-                                linkPhone
+                                linkPhone,
+                                master
                             });
                         }
                         
