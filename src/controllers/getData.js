@@ -2,6 +2,7 @@ const express = require('express');
 
 const { API } = require('../helpers/sendAPI');
 const { getData } = require('../helpers/tmAPI');
+const { getTMData } =require('../helpers/sendThuongHieuAPI');
 const getDataRouter = express.Router();
 
 function getCompanyWebSite(size) {
@@ -112,5 +113,15 @@ getDataRouter.get('/baothuongmai/:from/:to', (req, res) => {
     }
     getData(startIndex, endIndex).then(results => res.render('baothuongmai.ejs', { results }));
 });
+
+getDataRouter.get('/thuonghieutoancau/:from/:to', (req, res) => {
+    const {from, to} = req.params;
+    const startIndex = parseInt(from);
+    const endIndex = parseInt(to);
+    if(startIndex < 1 || startIndex > endIndex) {
+        res.send('Nhap sai roi kia...');
+    }
+    getTMData(startIndex, endIndex).then(results => res.render('thuonghieutoancau', { results }));
+})
 
 module.exports = {getDataRouter}

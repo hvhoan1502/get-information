@@ -1,9 +1,10 @@
 const request = require('request');
+const _ = require('lodash');
 
 
-function getAll() {
+function getAll(index) {
     return new Promise((resolve, reject) => {
-        request('http://thuonghieutoancau.vn/index.php?lang=vi&mod=search&op=company&codetax=&keys=&business=0&location=14&begin=&end=&p=2', (err, rq, body) => {
+        request('http://thuonghieutoancau.vn/index.php?lang=vi&mod=search&op=company&codetax=&keys=&business=0&location=14&begin=&end=&p=' + index, (err, rq, body) => {
             if (err) return reject(err);
             let results = [];
             const firstIndex = body.indexOf('<div class="list-info-c">');
@@ -22,7 +23,7 @@ function getAll() {
 
 function getDetailCompany(uri) {
     return new Promise((resolve, reject) => {
-        request('http://thuonghieutoancau.vn/vi/info/DOANH-NGHIEP-TU-NHAN-KIM-QUY-SANG-17671.html', (err, rq, body) => {
+        request(uri, (err, rq, body) => {
             if (err) return reject(err);
             const firstIndex = body.indexOf('<div class="company-info">');
             const lastIndex = body.indexOf('<div class="sys_mess postion_ads_detail">');
@@ -61,9 +62,16 @@ function getDetailCompany(uri) {
     })
 }
 
-async function getDataCompany() {
-    const bodyDetail = await getAll();
+
+async function getTMData(startIndex, endIndex) {
+    let bodyDetail = [];
     let results = [];
+
+    for (let index = startIndex; index <= endIndex; index++) {
+        const listLink = await getAll(index);
+        bodyDetail = bodyDetail.concat(listLink);
+    }
+    
     for(let i = 0; i< bodyDetail.length; i++) {
         const body = await getDetailCompany(bodyDetail[i]);
         if(body) {
@@ -71,7 +79,6 @@ async function getDataCompany() {
         }
     }
     return results;
-};
+}
 
-
-getDataCompany().then(result => console.log(result));
+module.exports = { getTMData };
