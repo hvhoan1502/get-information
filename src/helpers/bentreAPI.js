@@ -57,9 +57,9 @@ async function getDetailCompany(uri) {
             data = data.substring(lastIndexAddress + 5);
             const firstIndexMaster = data.indexOf('Đại diện pháp luật');
             const lastIndexMaster = data.indexOf('<br/> ');
-            let master = data.substring(firstIndexMaster, lastIndexMaster);
-            if (firstIndexMaster === -1 || lastIndexMaster === -1) {
-                master = '';
+            let master;
+            if (firstIndexMaster > 0 && lastIndexMaster >0) {
+                master = data.substring(firstIndexMaster, lastIndexMaster);
             }
             
             //sdt link

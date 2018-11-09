@@ -13,7 +13,9 @@
                     <div>
                         <span>Tên công ty: <%= result.name %> </span><br>
                         <span>Địa chỉ: <%= result.address %> </span><br>
-                        <span><%= result.master %></span> <br>
+                        <%if (result.master) {%>
+                            <span><%= result.master %></span> <br>
+                        <%}%>
                         <span>Số điện thoại: <img src= '<%= result.linkPhone %>' alt=""></span> <br>
                     </div>
                 </div>
