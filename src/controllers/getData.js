@@ -3,6 +3,7 @@ const express = require('express');
 const { API } = require('../helpers/sendAPI');
 const { getData } = require('../helpers/tmAPI');
 const { getTMData } =require('../helpers/sendThuongHieuAPI');
+const { getDataCompanyBenTre } = require('../helpers/bentreAPI');
 const getDataRouter = express.Router();
 
 function getCompanyWebSite(size) {
@@ -122,6 +123,16 @@ getDataRouter.get('/thuonghieutoancau/:from/:to', (req, res) => {
         res.send('Nhap sai roi kia...');
     }
     getTMData(startIndex, endIndex).then(results => res.render('thuonghieutoancau', { results }));
+});
+
+getDataRouter.get('/thongtincongty/ben-tre/:from/:to', (req, res) => {
+    const {from, to} = req.params;
+    const startIndex = parseInt(from);
+    const endIndex = parseInt(to);
+    if(startIndex < 1 || startIndex > endIndex) {
+        res.send('Nhap sai roi kia...');
+    }
+    getDataCompanyBenTre(startIndex, endIndex).then(results => res.render('home', { results }));
 })
 
 module.exports = {getDataRouter}
