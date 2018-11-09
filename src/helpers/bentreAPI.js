@@ -3,7 +3,7 @@ const request = require('request');
 
 async function getAll(pageIndex) {
     return new Promise((resolve, reject) => {
-        request(`http://www.thongtincongty.com/tinh-ben-tre/?page=` + pageIndex, (err, rq, body) => {
+        request(`http://www.thongtincongty.com/tinh-ben-tre/thanh-pho-ben-tre/?page=` + pageIndex, (err, rq, body) => {
             if (err) return reject(err);
             let results = [];
             const st1 = body.indexOf('<div class="search-results">');
@@ -57,7 +57,11 @@ async function getDetailCompany(uri) {
             data = data.substring(lastIndexAddress + 5);
             const firstIndexMaster = data.indexOf('Đại diện pháp luật');
             const lastIndexMaster = data.indexOf('<br/> ');
-            const master = data.substring(firstIndexMaster, lastIndexMaster);
+            let master = data.substring(firstIndexMaster, lastIndexMaster);
+            if (firstIndexMaster === -1 || lastIndexMaster === -1) {
+                master = '';
+            }
+            
             //sdt link
             const firstIndexPhone = data.indexOf('Điện thoại: <img src=');
             const lastIndexPhone = data.indexOf('"><br/>');
