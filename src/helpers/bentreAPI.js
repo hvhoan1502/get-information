@@ -1,9 +1,9 @@
 const request = require('request');
 
 
-async function getAll(pageIndex) {
+async function getAll(district,pageIndex) {
     return new Promise((resolve, reject) => {
-        request(`http://www.thongtincongty.com/tinh-ben-tre/thanh-pho-ben-tre/?page=` + pageIndex, (err, rq, body) => {
+        request(`http://www.thongtincongty.com/${district}/?page=${pageIndex}`, (err, rq, body) => {
             if (err) return reject(err);
             let results = [];
             const st1 = body.indexOf('<div class="search-results">');
@@ -32,7 +32,7 @@ function info(data) {
     return link;
 };
 
-async function getDetailCompany(uri) {
+async function getDetailCompany(district, uri) {
     return new Promise((resolve, reject) => {
         request(uri, (err, rq, body) => {
             if (err) return reject(err);
@@ -51,7 +51,14 @@ async function getDetailCompany(uri) {
             }
             //address
             const firstIndexAddress = data.indexOf('Địa chỉ');
-            const lastIndexAddress = data.indexOf('Tre<br/>');
+            let lastIndexAddress;
+            if (district == 'tinh-ben-tre') {
+                lastIndexAddress = data.indexOf('Tre<br/>');
+            } else if(district == 'tinh-long-an') {
+                lastIndexAddress = data.indexOf('An<br/>') - 1;
+            } else {
+                lastIndexAddress = data.indexOf('Nai<br/>');
+            }
             const address = data.substring(firstIndexAddress, lastIndexAddress + 3);
             // ndd
             data = data.substring(lastIndexAddress + 5);
@@ -85,20 +92,20 @@ async function getDetailCompany(uri) {
 
 
 
-async function getDataCompanyBenTre(startPages, endPages) {
+async function getDataCompanyBenTre(district,startPages, endPages) {
     let results = [];
     let body = [];
 
     try {
         for(let i = startPages; i <= endPages; i++) {
-            const result = await getAll(i);
+            const result = await getAll(district,i);
             if (result.length) {
                 results = results.concat(result);
             }
         }
 
         for (let item = 0; item < results.length; item ++) {
-            const bodyDetail = await getDetailCompany(results[item]);
+            const bodyDetail = await getDetailCompany(district, results[item]);
             if(bodyDetail) {
                 body.push(bodyDetail);
             }

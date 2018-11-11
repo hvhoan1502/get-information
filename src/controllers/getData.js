@@ -125,14 +125,14 @@ getDataRouter.get('/thuonghieutoancau/:from/:to', (req, res) => {
     getTMData(startIndex, endIndex).then(results => res.render('thuonghieutoancau', { results }));
 });
 
-getDataRouter.get('/thongtincongty/ben-tre/:from/:to', (req, res) => {
-    const {from, to} = req.params;
+getDataRouter.get('/thongtincongty/:district/:from/:to', (req, res) => {
+    const {district, from, to} = req.params;
     const startIndex = parseInt(from);
     const endIndex = parseInt(to);
     if(startIndex < 1 || startIndex > endIndex) {
         res.send('Nhap sai roi kia...');
     }
-    getDataCompanyBenTre(startIndex, endIndex).then(results => res.render('home', { results }));
+    getDataCompanyBenTre(district,startIndex, endIndex).then(results => res.render('home', { results }));
 })
 
 module.exports = {getDataRouter}
